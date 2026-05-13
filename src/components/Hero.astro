@@ -1,5 +1,5 @@
 ---
-import { whatsapp } from "../data/brand";
+import { whatsapp, withBase } from "../data/brand";
 import WhatsAppIcon from "./WhatsAppIcon.astro";
 
 const whatsappHref = whatsapp.order;
@@ -56,7 +56,7 @@ const whatsappHref = whatsapp.order;
     <div class="lg:col-span-5 reveal reveal-delay-2 relative z-10">
       <figure class="relative aspect-[4/5] w-full overflow-hidden bg-emerald" data-parallax>
         <img
-          src="/brand/bottle-burberry-pair.jpg"
+          src={withBase("brand/bottle-burberry-pair.jpg")}
           alt="Deux flacons Nota Parfum Burberry Her, 50ml et 30ml, sur fond émeraude"
           class="h-full w-full object-cover object-center"
           width="900"

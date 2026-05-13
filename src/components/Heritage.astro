@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../data/brand";
+
 const facts = [
   { label: "Néroli des vergers de Fès–Meknès", value: "20% de la production mondiale" },
   { label: "Tradition de distillation arabo-andalouse", value: "Depuis le IXᵉ siècle" },
@@ -12,7 +14,7 @@ const facts = [
     <div class="lg:col-span-6 reveal">
       <figure class="relative aspect-[4/5] overflow-hidden bg-cream-deep">
         <img
-          src="/brand/bottle-miss-dior-prada.jpg"
+          src={withBase("brand/bottle-miss-dior-prada.jpg")}
           alt="Deux flacons Nota Parfum — Miss Dior et Prada Paradoxe — posés sur un drapé clair"
           class="h-full w-full object-cover object-center"
           width="900"

@@ -10,8 +10,8 @@
 [![Astro](https://img.shields.io/badge/ASTRO-5.x-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](https://astro.build)
 [![Tailwind v4](https://img.shields.io/badge/TAILWIND-V4-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](https://tailwindcss.com)
 [![Bun](https://img.shields.io/badge/BUN-1.3-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](https://bun.sh)
-[![Vitest](https://img.shields.io/badge/VITEST-22%2F22-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](https://vitest.dev)
-[![Vercel](https://img.shields.io/badge/DEPLOY-VERCEL-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](https://vercel.com)
+[![Vitest](https://img.shields.io/badge/VITEST-23%2F23-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](https://vitest.dev)
+[![GitHub Pages](https://img.shields.io/badge/LIVE-GH%20PAGES-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](https://hatimhtm.github.io/nota-parfum-landing/)
 [![License: MIT](https://img.shields.io/badge/LICENSE-MIT-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00)](LICENSE)
 
 <br>
@@ -67,9 +67,12 @@ Astro 5         →  static-first islands, zero JS by default
 Tailwind v4     →  via @tailwindcss/vite, design tokens in @theme block
 Bun 1.3         →  dev + CI runtime
 Vitest 2        →  data integrity + built-HTML sanity
-GitHub Actions  →  bun install · check · build · grep · test
-Vercel          →  static deploy
+GitHub Actions  →  ci.yml (test) + deploy-pages.yml (publish)
+GitHub Pages    →  static deploy at hatimhtm.github.io/nota-parfum-landing
 ```
+
+Astro's `site` and `base` read `SITE` / `BASE_PATH` from env, so the same
+build artefact retargets to Vercel or a custom domain without source edits.
 
 ### `/// PROJECT LAYOUT`
 
@@ -136,8 +139,8 @@ CI runs the same commands (`bun install → check → build → grep markers →
 
 ### `/// STATUS`
 
-🟢 **Production-ready static site.** Built, type-checked, tested, deployed.
-Pull request workflow gates merges on the full CI suite.
+🟢 **Production-ready.** Live at **[hatimhtm.github.io/nota-parfum-landing](https://hatimhtm.github.io/nota-parfum-landing/)**.
+Every push to `main` runs the full CI suite and re-publishes the site automatically.
 
 ---
 

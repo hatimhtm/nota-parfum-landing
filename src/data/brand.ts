@@ -1,6 +1,17 @@
 // Source of truth for the brand's contact channels and identity strings.
 // Used by Nav, Hero, Ritual, Collection, Footer, Layout, tests.
 
+// Prefix a public-folder path with Astro's configured base so the same `src`
+// works whether the site lives at the root (Vercel) or a subpath (GH Pages).
+// We normalize both ends — BASE_URL is not guaranteed to have a trailing slash
+// when `trailingSlash: "ignore"` is set in astro.config.
+export const withBase = (path: string): string => {
+  const base = import.meta.env.BASE_URL;
+  const left = base.endsWith("/") ? base : base + "/";
+  const right = path.startsWith("/") ? path.slice(1) : path;
+  return left + right;
+};
+
 export const brand = {
   name: "Nota Parfum",
   tagline: "L'essence de votre signature.",

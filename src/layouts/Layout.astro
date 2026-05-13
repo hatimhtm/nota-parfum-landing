@@ -1,4 +1,7 @@
 ---
+import "../styles/globals.css";
+import { withBase } from "../data/brand";
+
 export interface Props {
   title?: string;
   description?: string;
@@ -8,13 +11,11 @@ export interface Props {
 const {
   title = "Nota Parfum — L'essence de votre signature",
   description = "Vingt-quatre fragrances inspirées des grandes maisons, embouteillées à Fès, livrées partout au Maroc.",
-  ogImage = "/brand/bottle-burberry-pair.jpg",
+  ogImage = "brand/bottle-burberry-pair.jpg",
 } = Astro.props;
 
-import "../styles/globals.css";
-
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const absoluteOgImage = new URL(ogImage, Astro.site).toString();
+const absoluteOgImage = new URL(withBase(ogImage), Astro.site).toString();
 ---
 
 <!doctype html>
@@ -40,8 +41,8 @@ const absoluteOgImage = new URL(ogImage, Astro.site).toString();
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteOgImage} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/brand/logo.png" />
+    <link rel="icon" type="image/svg+xml" href={withBase("favicon.svg")} />
+    <link rel="apple-touch-icon" href={withBase("brand/logo.png")} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

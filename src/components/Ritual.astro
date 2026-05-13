@@ -1,5 +1,5 @@
 ---
-import { whatsapp } from "../data/brand";
+import { whatsapp, withBase } from "../data/brand";
 
 const whatsappHref = whatsapp.trio;
 
@@ -31,7 +31,7 @@ const steps = [
       <div class="lg:col-span-5 order-2 lg:order-1 reveal">
         <figure class="relative aspect-[4/5] overflow-hidden border border-emerald-mist">
           <img
-            src="/brand/bottle-trio-orchard.jpg"
+            src={withBase("brand/bottle-trio-orchard.jpg")}
             alt="Trois flacons Nota Parfum dans un verger, parmi des pétales de rose"
             class="h-full w-full object-cover"
             width="900"
