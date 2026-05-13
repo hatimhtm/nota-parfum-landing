@@ -1,0 +1,66 @@
+---
+import { brand, whatsapp } from "../data/brand";
+import WhatsAppIcon from "./WhatsAppIcon.astro";
+
+const whatsappHref = whatsapp.general;
+const igHref = brand.instagramUrl;
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="relative bg-emerald text-cream overflow-hidden">
+  <div class="grain" aria-hidden="true"></div>
+  <span class="chapter-num" style="top: 8%; left: 4%; color: var(--color-gold-soft); opacity: 0.12;" aria-hidden="true">VII</span>
+
+  <div class="container-page relative py-24 lg:py-32">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+      <div class="lg:col-span-7 reveal">
+        <div class="flex items-center gap-3">
+          <span class="h-px w-10 bg-gold-soft opacity-60"></span>
+          <p class="eyebrow-light">Contact</p>
+        </div>
+        <h2 class="display-xl mt-5 text-cream">
+          Composez votre <span class="italic font-light text-gold-soft">signature</span>.
+        </h2>
+        <p class="mt-7 max-w-xl text-base lg:text-[17px] leading-relaxed text-cream/80">
+          Une question, une sélection à confirmer, un coffret à offrir&nbsp;?
+          Notre atelier répond directement sur WhatsApp, en français ou en darija.
+        </p>
+      </div>
+
+      <div class="lg:col-span-5 reveal reveal-delay-2">
+        <div class="space-y-4">
+          <a href={whatsappHref} target="_blank" rel="noopener" class="btn btn-light w-full" data-magnetic>
+            <span class="flex items-center gap-2.5"><WhatsAppIcon size={14} /> WhatsApp · {brand.whatsappDisplay}</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href={igHref} target="_blank" rel="noopener" class="btn btn-light-ghost w-full">
+            <span>Instagram · @{brand.instagramHandle}</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-emerald-mist">
+    <div class="container-page py-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[11px] font-mono uppercase tracking-[0.18em] text-cream/60">
+      <div class="flex items-center gap-3">
+        <svg width="20" height="20" viewBox="0 0 64 64" aria-hidden="true">
+          <g fill="currentColor">
+            <circle cx="22" cy="46" r="9"></circle>
+            <rect x="29" y="14" width="3" height="34"></rect>
+            <path d="M32 14 C 42 12, 50 18, 50 26 C 44 26, 36 22, 32 18 Z" opacity="0.95"></path>
+            <path d="M32 22 C 40 20, 47 24, 47 30 C 41 30, 35 27, 32 24 Z" opacity="0.75"></path>
+          </g>
+        </svg>
+        <span>Nota Parfum &middot; Fès, Maroc</span>
+      </div>
+      <div class="flex flex-wrap gap-x-6 gap-y-2">
+        <span>WhatsApp Business vérifié</span>
+        <span>Paiement à la livraison</span>
+        <span>Livraison nationale 48&thinsp;h</span>
+        <span>&copy; {year}</span>
+      </div>
+    </div>
+  </div>
+</section>

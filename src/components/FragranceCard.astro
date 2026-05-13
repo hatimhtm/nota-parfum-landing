@@ -1,0 +1,42 @@
+---
+import type { Fragrance } from "../data/fragrances";
+
+interface Props {
+  fragrance: Fragrance;
+}
+
+const { fragrance } = Astro.props;
+---
+
+<article class="group relative border-t border-ink/10 pt-6 pb-7 transition-colors duration-500 hover:border-gold">
+  <div class="flex items-start justify-between gap-4">
+    <p class="font-mono text-[11px] tracking-[0.18em] text-ink-mute pt-1">
+      N°{fragrance.number}
+    </p>
+    <p class="font-mono text-[11px] tracking-[0.18em] text-ink-mute uppercase pt-1">
+      {fragrance.family}
+    </p>
+  </div>
+
+  <h3 class="fragrance-name mt-3">{fragrance.name}</h3>
+
+  <p class="text-sm text-ink-soft mt-2 leading-relaxed">
+    Inspiré de <span class="italic">{fragrance.inspiredBy}</span>
+  </p>
+
+  <p class="text-sm text-ink-mute mt-3 leading-relaxed">{fragrance.note}</p>
+
+  <div class="flex items-end justify-between mt-5">
+    <p class="font-mono text-sm tracking-[0.12em]">
+      <span class="text-2xl font-display tracking-normal">{fragrance.priceMad}</span>
+      <span class="ml-1 uppercase">MAD</span>
+      <span class="ml-1 text-ink-mute">/ 50&nbsp;ml</span>
+    </p>
+    <span
+      class="font-mono text-[10px] tracking-[0.18em] uppercase text-ink-mute opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+      aria-hidden="true"
+    >
+      Disponible
+    </span>
+  </div>
+</article>

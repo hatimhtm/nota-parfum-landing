@@ -1,0 +1,14 @@
+---
+import { all } from "../data/fragrances";
+
+// Duplicate the list so the CSS animation can translate by -50% and loop seamlessly.
+const items = [...all, ...all];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {items.map((f) => (
+      <span class="marquee__item">{f.name}</span>
+    ))}
+  </div>
+</div>

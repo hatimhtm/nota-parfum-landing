@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1A1A1A" stroke-width="0.5" opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="420" fill="#F5EFE4"/>
+  <rect width="1280" height="420" fill="url(#grid)"/>
+
+  <rect x="0" y="0" width="1280" height="36" fill="#CCFF00"/>
+  <text x="40" y="24" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" letter-spacing="6" fill="#1A1A1A">
+    ASTRO · TAILWIND · BUN · VITEST · VERCEL · STATIC
+  </text>
+
+  <text x="40" y="100" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" letter-spacing="6" fill="#1A1A1A">
+    PARFUMERIE · FÈS, MAROC · 24 FRAGRANCES
+  </text>
+
+  <text x="40" y="250" font-family="Helvetica Neue, Arial Black, sans-serif" font-size="148" font-weight="900" letter-spacing="-6" fill="#1A1A1A">
+    NOTA<tspan fill="#CCFF00">.</tspan>
+  </text>
+
+  <text x="40" y="310" font-family="JetBrains Mono, monospace" font-size="14" font-weight="500" letter-spacing="2" fill="#1A1A1A">
+    L'essence de votre signature.
+  </text>
+
+  <rect x="1080" y="80" width="140" height="140" fill="#CCFF00" stroke="#1A1A1A" stroke-width="2"/>
+  <text x="1100" y="120" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" letter-spacing="2" fill="#1A1A1A">INSPIRED</text>
+  <text x="1100" y="148" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" letter-spacing="2" fill="#1A1A1A">BY · MADE</text>
+  <text x="1100" y="176" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" letter-spacing="2" fill="#1A1A1A">IN FÈS</text>
+
+  <text x="40" y="385" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" letter-spacing="4" fill="#1A1A1A" opacity="0.7">
+    LANDING PAGE · CLIENT PITCH · MAY 2026 · HATIM EL HASSAK
+  </text>
+</svg>

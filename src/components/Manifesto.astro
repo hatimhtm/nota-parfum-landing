@@ -1,0 +1,53 @@
+---
+const pillars = [
+  {
+    n: "I",
+    title: "Les originaux, pour inspiration",
+    body: "Nous étudions les compositions qui ont fait l'histoire du parfum — Dior, Tom Ford, Creed, YSL — et nous en proposons une lecture honnête, identifiée, accessible. Pas de mystère. Pas de copie. Une inspiration assumée.",
+  },
+  {
+    n: "II",
+    title: "La main d'un atelier de Fès",
+    body: "Chaque flacon est embouteillé et étiqueté à Fès, capitale historique du parfum marocain. C'est un travail de précision — pesée, macération, contrôle — fait par des mains qui s'en soucient.",
+  },
+  {
+    n: "III",
+    title: "Le prix d'une vraie liberté",
+    body: "Soixante-quinze dirhams le flacon, cinquante millilitres dans la poche. Pour que porter un parfum redevienne un geste quotidien — pas un événement réservé aux grandes occasions.",
+  },
+];
+---
+
+<section id="manifeste" class="relative bg-cream-deep py-24 lg:py-32 overflow-hidden">
+  <span class="chapter-num" style="top: 6%; right: 4%;" aria-hidden="true">II</span>
+
+  <div class="container-page relative">
+    <div class="max-w-3xl reveal">
+      <div class="flex items-center gap-3">
+        <span class="h-px w-10 bg-gold"></span>
+        <p class="eyebrow">Le manifeste</p>
+      </div>
+      <h2 class="display-lg mt-5">
+        Les grands parfums, <span class="italic font-light">repensés</span>.
+      </h2>
+      <p class="dropcap mt-8 text-lg text-ink-soft leading-relaxed">
+        Nota Parfum part d'une conviction simple&nbsp;: l'élégance d'une fragrance
+        ne devrait pas dépendre d'une boîte en velours ni d'une notoriété internationale.
+        Elle se mesure au geste de celle ou celui qui la porte. C'est ce geste,
+        et lui seul, que nous avons choisi de servir.
+      </p>
+    </div>
+
+    <div class="hair mt-14 mb-14 reveal"></div>
+
+    <div class="grid md:grid-cols-3 gap-10 lg:gap-14">
+      {pillars.map((p, i) => (
+        <article class={`reveal reveal-delay-${i + 1}`}>
+          <p class="font-display text-gold text-3xl">{p.n}</p>
+          <h3 class="display-md mt-4">{p.title}</h3>
+          <p class="mt-4 text-ink-soft leading-relaxed">{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

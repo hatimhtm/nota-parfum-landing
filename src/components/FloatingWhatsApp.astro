@@ -1,0 +1,34 @@
+---
+import { whatsapp } from "../data/brand";
+import WhatsAppIcon from "./WhatsAppIcon.astro";
+---
+
+<a
+  href={whatsapp.collection}
+  target="_blank"
+  rel="noopener"
+  class="floating-wa"
+  data-floating-wa
+  aria-label="Contacter Nota Parfum sur WhatsApp"
+>
+  <span class="floating-wa__pulse" aria-hidden="true"></span>
+  <WhatsAppIcon size={16} />
+  <span>Commander</span>
+</a>
+
+<script is:inline>
+  // Reveal the floating WhatsApp button only after the visitor has scrolled past the hero.
+  (() => {
+    const el = document.querySelector("[data-floating-wa]");
+    if (!el) return;
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.6) {
+        el.classList.add("is-revealed");
+      } else {
+        el.classList.remove("is-revealed");
+      }
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  })();
+</script>

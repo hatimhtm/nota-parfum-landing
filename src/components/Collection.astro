@@ -1,0 +1,83 @@
+---
+import { femmes, hommes, collectionCounts } from "../data/fragrances";
+import { whatsapp } from "../data/brand";
+import FragranceCard from "./FragranceCard.astro";
+---
+
+<section id="collection" class="relative bg-cream py-24 lg:py-32 overflow-hidden">
+  <span class="chapter-num" style="top: 4%; right: 4%;" aria-hidden="true">IV</span>
+  <div class="container-page relative">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
+      <div class="max-w-2xl">
+        <div class="flex items-center gap-3">
+          <span class="h-px w-10 bg-gold"></span>
+          <p class="eyebrow">La collection</p>
+        </div>
+        <h2 class="display-lg mt-5">
+          {collectionCounts.total} signatures, <span class="italic font-light">une parfumerie</span>.
+        </h2>
+        <p class="mt-6 text-ink-soft leading-relaxed text-lg">
+          Douze fragrances féminines, douze masculines. Chacune inspirée d'un original
+          identifié, reformulée pour porter sa propre signature olfactive.
+        </p>
+      </div>
+
+      <div role="tablist" aria-label="Filtrer la collection" class="flex border-b border-ink/10 self-start lg:self-end">
+        <button data-tab="femmes" role="tab" aria-selected="true" aria-controls="panel-femmes" tabindex="0" class="tab">
+          Les Femmes <span class="text-ink-mute ml-1.5">({collectionCounts.femmes})</span>
+        </button>
+        <button data-tab="hommes" role="tab" aria-selected="false" aria-controls="panel-hommes" tabindex="-1" class="tab">
+          Les Hommes <span class="text-ink-mute ml-1.5">({collectionCounts.hommes})</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="hair mt-12 mb-10 reveal"></div>
+
+    <div
+      id="panel-femmes"
+      role="tabpanel"
+      aria-labelledby="tab-femmes"
+      data-panel="femmes"
+      class="tabpanel grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-2"
+    >
+      {femmes.map((f, i) => (
+        <div class={`reveal reveal-delay-${(i % 4) + 1}`}>
+          <FragranceCard fragrance={f} />
+        </div>
+      ))}
+    </div>
+
+    <div
+      id="panel-hommes"
+      role="tabpanel"
+      aria-labelledby="tab-hommes"
+      data-panel="hommes"
+      class="tabpanel grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-2"
+      hidden
+    >
+      {hommes.map((f, i) => (
+        <div class={`reveal reveal-delay-${(i % 4) + 1}`}>
+          <FragranceCard fragrance={f} />
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 reveal">
+      <p class="text-sm text-ink-soft max-w-lg">
+        Les flacons de 30&nbsp;ml et les formats coffret sont disponibles sur demande.
+        Une question sur une fragrance&nbsp;? Notre atelier répond directement.
+      </p>
+      <a
+        href={whatsapp.question}
+        target="_blank"
+        rel="noopener"
+        class="btn btn-ghost shrink-0"
+        data-magnetic
+      >
+        Écrire à l'atelier
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

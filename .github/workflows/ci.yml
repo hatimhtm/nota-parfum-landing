@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build, check, and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Type-check + Astro diagnostics
+        run: bun run check
+
+      - name: Build
+        run: bun run build
+
+      - name: Sanity-check built output
+        run: |
+          set -e
+          test -f dist/index.html
+          echo "→ Tagline present?"
+          grep -q "L'essence de votre" dist/index.html
+          echo "→ Brand IG handle present?"
+          grep -q "notaperfumes.official" dist/index.html
+          echo "→ WhatsApp number present?"
+          grep -q "212779276395" dist/index.html
+          echo "→ All seven anchor sections present?"
+          for id in top manifeste decouvrir collection atelier avis contact; do
+            grep -q "id=\"$id\"" dist/index.html || { echo "Missing #$id"; exit 1; }
+          done
+          echo "→ Luxury layers present?"
+          for marker in intro-loader marquee__track side-rail floating-wa; do
+            grep -q "$marker" dist/index.html || { echo "Missing $marker"; exit 1; }
+          done
+          echo "→ Both tabs present?"
+          grep -q 'data-tab="femmes"' dist/index.html
+          grep -q 'data-tab="hommes"' dist/index.html
+          echo "→ 139 dh pack present?"
+          grep -q "Cent trente-neuf" dist/index.html
+          echo "All sanity checks passed."
+
+      - name: Run Vitest suite
+        run: bun run test

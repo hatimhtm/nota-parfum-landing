@@ -1,0 +1,57 @@
+---
+import { whatsapp } from "../data/brand";
+import WhatsAppIcon from "./WhatsAppIcon.astro";
+
+const links = [
+  { href: "#decouvrir", label: "Découvrir" },
+  { href: "#collection", label: "Collection" },
+  { href: "#atelier", label: "L'Atelier de Fès" },
+  { href: "#avis", label: "Avis" },
+  { href: "#contact", label: "Contact" },
+];
+const whatsappHref = whatsapp.collection;
+---
+
+<nav data-nav class="sticky top-0 z-50">
+  <div class="container-page flex items-center justify-between py-5">
+    <a href="#top" class="flex items-center gap-3" aria-label="Nota Parfum, retour en haut">
+      <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true">
+        <g fill="currentColor" class="text-ink">
+          <circle cx="22" cy="46" r="9"></circle>
+          <rect x="29" y="14" width="3" height="34"></rect>
+          <path d="M32 14 C 42 12, 50 18, 50 26 C 44 26, 36 22, 32 18 Z" opacity="0.95"></path>
+          <path d="M32 22 C 40 20, 47 24, 47 30 C 41 30, 35 27, 32 24 Z" opacity="0.75"></path>
+        </g>
+      </svg>
+      <span class="font-display text-xl tracking-[0.22em] text-ink">NOTA</span>
+      <span class="font-mono text-[10px] tracking-[0.18em] text-ink-soft uppercase">Parfum</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      {links.map((l) => (
+        <a href={l.href} class="nav-link">{l.label}</a>
+      ))}
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener"
+        class="btn btn-ghost text-[10px] !py-2 !px-3.5"
+        aria-label="Contacter Nota Parfum sur WhatsApp"
+      >
+        <WhatsAppIcon size={12} />
+        WhatsApp
+      </a>
+    </div>
+
+    <a
+      href={whatsappHref}
+      target="_blank"
+      rel="noopener"
+      class="md:hidden btn btn-ghost text-[10px] !py-2 !px-3"
+      aria-label="Contacter Nota Parfum sur WhatsApp"
+    >
+      <WhatsAppIcon size={12} />
+      WhatsApp
+    </a>
+  </div>
+</nav>
