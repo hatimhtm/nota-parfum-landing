@@ -55,120 +55,280 @@ const absoluteOgImage = new URL(withBase(ogImage), Astro.site).toString();
   </head>
   <body>
     <a href="#collection" class="skip-link">Aller au contenu</a>
+
     <div class="scroll-progress" aria-hidden="true">
       <div class="scroll-progress__bar" data-scroll-bar></div>
     </div>
+
+    <div class="cursor" data-cursor aria-hidden="true">
+      <div class="cursor__dot" data-cursor-dot></div>
+      <div class="cursor__ring" data-cursor-ring></div>
+    </div>
+
     <slot />
 
-    <script is:inline>
-      // Scroll-reveal via IntersectionObserver — respects prefers-reduced-motion
-      (() => {
-        const prefersReducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
+    <script>
+      import Lenis from "lenis";
+      import { animate, inView, stagger, scroll } from "motion";
 
-        const reveals = document.querySelectorAll(".reveal");
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const finePointer = window.matchMedia("(pointer: fine)").matches;
 
-        if (prefersReducedMotion) {
-          reveals.forEach((el) => el.classList.add("is-visible"));
-          return;
+      // --- Lenis smooth scroll -------------------------------------------------
+      let lenis: Lenis | null = null;
+      if (!reduced) {
+        lenis = new Lenis({
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          syncTouch: false,
+        });
+        const raf = (time: number) => {
+          lenis?.raf(time);
+          requestAnimationFrame(raf);
+        };
+        requestAnimationFrame(raf);
+      }
+
+      // --- Scroll-position driven UI: nav, side rail, progress bar -------------
+      const nav = document.querySelector("[data-nav]");
+      const bar = document.querySelector("[data-scroll-bar]") as HTMLElement | null;
+      const railDots = Array.from(
+        document.querySelectorAll<HTMLElement>(".side-rail__dot")
+      );
+      const railTargets = railDots
+        .map((d) => {
+          const id = d.dataset.railTarget;
+          return { dot: d, el: id ? document.getElementById(id) : null };
+        })
+        .filter((s): s is { dot: HTMLElement; el: HTMLElement } => !!s.el);
+
+      const tick = () => {
+        const y = window.scrollY;
+
+        // Nav state
+        if (nav) {
+          if (y > 60) nav.classList.add("nav-scrolled");
+          else nav.classList.remove("nav-scrolled");
         }
 
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
-        );
+        // Scroll progress
+        if (bar) {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          const pct = max > 0 ? Math.min(100, (y / max) * 100) : 0;
+          bar.style.width = pct.toFixed(2) + "%";
+        }
 
-        reveals.forEach((el) => observer.observe(el));
-      })();
-    </script>
-
-    <script is:inline>
-      // Sticky nav state + scroll-progress bar in a single scroll handler.
-      (() => {
-        const nav = document.querySelector("[data-nav]");
-        const bar = document.querySelector("[data-scroll-bar]");
-        const onScroll = () => {
-          const y = window.scrollY;
-          if (nav) {
-            if (y > 60) nav.classList.add("nav-scrolled");
-            else nav.classList.remove("nav-scrolled");
+        // Side rail — find the section whose top has crossed the viewport midpoint
+        if (railTargets.length) {
+          const midpoint = y + window.innerHeight * 0.4;
+          let activeId = railTargets[0].el.id;
+          for (const t of railTargets) {
+            if (t.el.offsetTop <= midpoint) activeId = t.el.id;
           }
-          if (bar) {
-            const max = document.documentElement.scrollHeight - window.innerHeight;
-            const pct = max > 0 ? Math.min(100, (y / max) * 100) : 0;
-            bar.style.width = pct.toFixed(2) + "%";
-          }
-        };
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", onScroll);
-      })();
-    </script>
+          railTargets.forEach((t) => {
+            t.dot.classList.toggle("is-active", t.el.id === activeId);
+          });
+        }
+      };
 
-    <script is:inline>
-      // Magnetic effect on primary CTAs — desktop pointer only.
-      (() => {
-        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const fine = window.matchMedia("(pointer: fine)").matches;
-        if (reduced || !fine) return;
-        const targets = document.querySelectorAll("[data-magnetic]");
-        targets.forEach((el) => {
+      if (lenis) {
+        lenis.on("scroll", tick);
+      } else {
+        window.addEventListener("scroll", tick, { passive: true });
+      }
+      window.addEventListener("resize", tick);
+      tick();
+
+      // --- Hash-link smooth scroll integration with Lenis ----------------------
+      document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const href = a.getAttribute("href");
+          if (!href || href === "#") return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          if (lenis) {
+            lenis.scrollTo(target as HTMLElement, { offset: 0, duration: 1.4 });
+          } else {
+            (target as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      // --- Motion-driven reveals -----------------------------------------------
+      if (!reduced) {
+        // Generic reveal
+        const reveals = document.querySelectorAll<HTMLElement>("[data-reveal]");
+        reveals.forEach((el) => {
+          inView(el, () => {
+            const delay = parseFloat(el.dataset.revealDelay || "0");
+            animate(
+              el,
+              { opacity: [0, 1], y: [40, 0] },
+              { duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] }
+            );
+          }, { margin: "0px 0px -10% 0px" });
+        });
+
+        // Stagger groups — children animate in sequence
+        document.querySelectorAll<HTMLElement>("[data-stagger]").forEach((group) => {
+          const children = group.querySelectorAll<HTMLElement>("[data-stagger-item]");
+          if (!children.length) return;
+          // Initial state
+          children.forEach((c) => {
+            c.style.opacity = "0";
+            c.style.transform = "translateY(40px)";
+          });
+          inView(group, () => {
+            animate(
+              Array.from(children),
+              { opacity: [0, 1], y: [40, 0] },
+              { duration: 0.9, delay: stagger(0.08), ease: [0.22, 1, 0.36, 1] }
+            );
+          }, { margin: "0px 0px -10% 0px" });
+        });
+
+        // Hero text — split by word, stagger in
+        document.querySelectorAll<HTMLElement>("[data-split-words]").forEach((el) => {
+          const text = el.textContent || "";
+          el.innerHTML = "";
+          const words = text.split(/(\s+)/);
+          words.forEach((w) => {
+            if (/^\s+$/.test(w)) {
+              el.appendChild(document.createTextNode(w));
+            } else {
+              const span = document.createElement("span");
+              span.className = "split-word";
+              span.textContent = w;
+              el.appendChild(span);
+            }
+          });
+          const spans = el.querySelectorAll<HTMLSpanElement>(".split-word");
+          spans.forEach((s) => {
+            s.style.display = "inline-block";
+            s.style.opacity = "0";
+            s.style.transform = "translateY(110%)";
+          });
+          animate(
+            Array.from(spans),
+            { opacity: [0, 1], y: ["110%", "0%"] },
+            { duration: 1.0, delay: stagger(0.07, { startDelay: 0.6 }), ease: [0.22, 1, 0.36, 1] }
+          );
+        });
+
+        // Hero image — clip-path mask reveal on first paint
+        document.querySelectorAll<HTMLElement>("[data-clip-reveal]").forEach((el) => {
+          el.style.clipPath = "inset(100% 0 0 0)";
+          animate(
+            el,
+            { clipPath: ["inset(100% 0 0 0)", "inset(0% 0 0 0)"] },
+            { duration: 1.4, delay: 0.75, ease: [0.65, 0, 0.35, 1] }
+          );
+        });
+
+        // Section images — slight scale-up as they enter view
+        document.querySelectorAll<HTMLElement>("[data-scale-in]").forEach((el) => {
+          scroll(animate(el, { scale: [1.08, 1] }), {
+            target: el,
+            offset: ["start end", "end start"],
+          });
+        });
+      }
+
+      // --- Magnetic CTAs (desktop pointer only) --------------------------------
+      if (!reduced && finePointer) {
+        document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((el) => {
           el.addEventListener("mousemove", (e) => {
             const r = el.getBoundingClientRect();
-            const x = e.clientX - (r.left + r.width / 2);
-            const y = e.clientY - (r.top + r.height / 2);
+            const x = (e as MouseEvent).clientX - (r.left + r.width / 2);
+            const y = (e as MouseEvent).clientY - (r.top + r.height / 2);
             el.style.transform = `translate(${(x * 0.18).toFixed(2)}px, ${(y * 0.22).toFixed(2)}px)`;
           });
           el.addEventListener("mouseleave", () => {
             el.style.transform = "translate(0,0)";
           });
         });
-      })();
-    </script>
+      }
 
-    <script is:inline>
-      // Collection tabs: Les Femmes / Les Hommes
+      // --- Custom cursor (desktop pointer only) --------------------------------
+      const cursor = document.querySelector<HTMLElement>("[data-cursor]");
+      if (cursor && !reduced && finePointer) {
+        document.documentElement.classList.add("has-custom-cursor");
+        const dot = cursor.querySelector<HTMLElement>("[data-cursor-dot]")!;
+        const ring = cursor.querySelector<HTMLElement>("[data-cursor-ring]")!;
+        cursor.style.opacity = "1";
+
+        let dx = window.innerWidth / 2;
+        let dy = window.innerHeight / 2;
+        let rx = dx;
+        let ry = dy;
+
+        window.addEventListener(
+          "mousemove",
+          (e) => {
+            dx = e.clientX;
+            dy = e.clientY;
+            dot.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%)`;
+          },
+          { passive: true }
+        );
+
+        const cursorRaf = () => {
+          rx += (dx - rx) * 0.18;
+          ry += (dy - ry) * 0.18;
+          ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+          requestAnimationFrame(cursorRaf);
+        };
+        requestAnimationFrame(cursorRaf);
+
+        const hover = (e: Event) => {
+          if ((e.target as HTMLElement).closest("a, button, [data-magnetic], [role='tab']")) {
+            cursor.classList.add("is-hovering");
+          } else {
+            cursor.classList.remove("is-hovering");
+          }
+        };
+        document.addEventListener("mouseover", hover);
+        document.addEventListener("mouseout", hover);
+
+        document.addEventListener("mouseleave", () => (cursor.style.opacity = "0"));
+        document.addEventListener("mouseenter", () => (cursor.style.opacity = "1"));
+      }
+
+      // --- Collection tabs -----------------------------------------------------
       (() => {
-        const tabs = document.querySelectorAll("[data-tab]");
-        const panels = document.querySelectorAll("[data-panel]");
+        const tabs = document.querySelectorAll<HTMLElement>("[data-tab]");
+        const panels = document.querySelectorAll<HTMLElement>("[data-panel]");
         if (!tabs.length) return;
 
-        const select = (key) => {
+        const select = (key: string) => {
           tabs.forEach((t) => {
-            const active = t.getAttribute("data-tab") === key;
+            const active = t.dataset.tab === key;
             t.setAttribute("aria-selected", active ? "true" : "false");
             t.setAttribute("tabindex", active ? "0" : "-1");
           });
           panels.forEach((p) => {
-            const active = p.getAttribute("data-panel") === key;
-            if (active) {
-              p.removeAttribute("hidden");
-            } else {
-              p.setAttribute("hidden", "");
-            }
+            const active = p.dataset.panel === key;
+            if (active) p.removeAttribute("hidden");
+            else p.setAttribute("hidden", "");
           });
         };
 
         tabs.forEach((t) => {
-          t.addEventListener("click", () => select(t.getAttribute("data-tab")));
+          t.addEventListener("click", () => t.dataset.tab && select(t.dataset.tab));
           t.addEventListener("keydown", (e) => {
-            const key = e.key;
+            const key = (e as KeyboardEvent).key;
             if (key === "ArrowRight" || key === "ArrowLeft") {
               e.preventDefault();
-              const order = Array.from(tabs).map((x) => x.getAttribute("data-tab"));
-              const idx = order.indexOf(t.getAttribute("data-tab"));
-              const next = key === "ArrowRight" ? (idx + 1) % order.length : (idx - 1 + order.length) % order.length;
-              const nextEl = tabs[next];
+              const order = Array.from(tabs).map((x) => x.dataset.tab || "");
+              const idx = order.indexOf(t.dataset.tab || "");
+              const next =
+                key === "ArrowRight"
+                  ? (idx + 1) % order.length
+                  : (idx - 1 + order.length) % order.length;
               select(order[next]);
-              nextEl && nextEl.focus();
+              tabs[next]?.focus();
             }
           });
         });

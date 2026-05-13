@@ -6,9 +6,10 @@ import FragranceCard from "./FragranceCard.astro";
 
 <section id="collection" class="relative bg-cream py-24 lg:py-32 overflow-hidden">
   <span class="chapter-num" style="top: 4%; right: 4%;" aria-hidden="true">IV</span>
+
   <div class="container-page relative">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-      <div class="max-w-2xl">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+      <div class="max-w-2xl" data-reveal>
         <div class="flex items-center gap-3">
           <span class="h-px w-10 bg-gold"></span>
           <p class="eyebrow">La collection</p>
@@ -22,7 +23,13 @@ import FragranceCard from "./FragranceCard.astro";
         </p>
       </div>
 
-      <div role="tablist" aria-label="Filtrer la collection" class="flex border-b border-ink/10 self-start lg:self-end">
+      <div
+        role="tablist"
+        aria-label="Filtrer la collection"
+        class="flex border-b border-ink/10 self-start lg:self-end"
+        data-reveal
+        data-reveal-delay="0.15"
+      >
         <button data-tab="femmes" role="tab" aria-selected="true" aria-controls="panel-femmes" tabindex="0" class="tab">
           Les Femmes <span class="text-ink-mute ml-1.5">({collectionCounts.femmes})</span>
         </button>
@@ -32,7 +39,7 @@ import FragranceCard from "./FragranceCard.astro";
       </div>
     </div>
 
-    <div class="hair mt-12 mb-10 reveal"></div>
+    <div class="hair mt-12 mb-10" data-reveal></div>
 
     <div
       id="panel-femmes"
@@ -40,9 +47,10 @@ import FragranceCard from "./FragranceCard.astro";
       aria-labelledby="tab-femmes"
       data-panel="femmes"
       class="tabpanel grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-2"
+      data-stagger
     >
-      {femmes.map((f, i) => (
-        <div class={`reveal reveal-delay-${(i % 4) + 1}`}>
+      {femmes.map((f) => (
+        <div data-stagger-item>
           <FragranceCard fragrance={f} />
         </div>
       ))}
@@ -56,14 +64,14 @@ import FragranceCard from "./FragranceCard.astro";
       class="tabpanel grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-2"
       hidden
     >
-      {hommes.map((f, i) => (
-        <div class={`reveal reveal-delay-${(i % 4) + 1}`}>
+      {hommes.map((f) => (
+        <div>
           <FragranceCard fragrance={f} />
         </div>
       ))}
     </div>
 
-    <div class="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 reveal">
+    <div class="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8" data-reveal>
       <p class="text-sm text-ink-soft max-w-lg">
         Les flacons de 30&nbsp;ml et les formats coffret sont disponibles sur demande.
         Une question sur une fragrance&nbsp;? Notre atelier répond directement.

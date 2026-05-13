@@ -7,7 +7,7 @@ export type Review = {
 };
 
 // All reviews are real, pulled verbatim from @notaperfumes.official Instagram stories.
-// The mix of French + Darija is the brand's actual voice — we keep it.
+// Brand replies have been excluded — only genuine customer messages remain.
 export const reviews: Review[] = [
   {
     quote:
@@ -23,12 +23,6 @@ export const reviews: Review[] = [
     fragrance: "Libre",
   },
   {
-    quote: "Bsahtk hbiba, had chi li kna bghyin.",
-    translation: "Bonne santé ma chère — c'est exactement ce qu'on voulait.",
-    language: "darija",
-    author: "Cliente — IG Story",
-  },
-  {
     quote:
       "Ana brasi khdita mn 3ndkom, ns7ni biha wa7d dri kay3rfkom. Osara7a dakshi top, ol kaliti msoraranatan, btaman raah 9il f79.",
     translation:
@@ -36,14 +30,6 @@ export const reviews: Review[] = [
     language: "darija",
     author: "Cliente — IG Story",
     fragrance: "You Intensely",
-  },
-  {
-    quote:
-      "Sara7a khdmtkom lakhwya, sanaty bnsiba dyalkom mabkhwya 9adra, kifma 7abato bnabit yawmiya ozghraritl.",
-    translation:
-      "Honnêtement, votre service est exceptionnel — je n'ai jamais vu mieux pour ce prix. Comme un parfum que j'utilise au quotidien.",
-    language: "darija",
-    author: "Cliente — IG Story",
   },
   {
     quote: "Ana ga3 mswitoni ki jani l3tar.",

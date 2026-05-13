@@ -11,47 +11,53 @@ const facts = [
 <section id="atelier" class="relative bg-cream py-24 lg:py-32 overflow-hidden">
   <span class="chapter-num" style="top: 4%; left: 4%;" aria-hidden="true">V</span>
   <div class="container-page grid lg:grid-cols-12 gap-12 lg:gap-20 items-center relative">
-    <div class="lg:col-span-6 reveal">
+    <div class="lg:col-span-6" data-reveal>
       <figure class="relative aspect-[4/5] overflow-hidden bg-cream-deep">
         <img
-          src={withBase("brand/bottle-miss-dior-prada.jpg")}
-          alt="Deux flacons Nota Parfum — Miss Dior et Prada Paradoxe — posés sur un drapé clair"
-          class="h-full w-full object-cover object-center"
-          width="900"
-          height="1125"
+          src={withBase("brand/neroli-orange-blossom.jpg")}
+          alt="Fleurs de néroli (fleur d'oranger) sur leur branche — la matière première historique de la parfumerie de Fès"
+          class="h-full w-full object-cover"
+          style="object-position: center 40%;"
+          width="1000"
+          height="1250"
           loading="lazy"
           decoding="async"
+          data-scale-in
         />
+        <figcaption class="absolute bottom-5 left-5 right-5 flex items-end justify-between text-cream">
+          <p class="font-mono text-[10px] tracking-[0.22em] uppercase drop-shadow">Fleur d'oranger</p>
+          <p class="font-display italic text-lg drop-shadow">Néroli de Fès</p>
+        </figcaption>
       </figure>
     </div>
 
     <div class="lg:col-span-6">
-      <div class="flex items-center gap-3 reveal">
+      <div class="flex items-center gap-3" data-reveal>
         <span class="h-px w-10 bg-gold"></span>
         <p class="eyebrow">L'atelier · Fès</p>
       </div>
-      <h2 class="display-lg mt-5 reveal reveal-delay-1">
+      <h2 class="display-lg mt-5" data-reveal data-reveal-delay="0.1">
         Embouteillé à Fès, capitale historique du
         <span class="italic font-light">parfum marocain</span>.
       </h2>
 
-      <p class="mt-8 text-ink-soft leading-relaxed text-lg reveal reveal-delay-2">
+      <p class="mt-8 text-ink-soft leading-relaxed text-lg" data-reveal data-reveal-delay="0.2">
         Avant Grasse, il y eut Fès. Au cœur du Maghreb, ses jardins de néroli
         nourrissent depuis des siècles une tradition de distillation transmise
         de génération en génération — un savoir-faire que la ville cultive encore aujourd'hui.
       </p>
 
-      <p class="mt-5 text-ink-soft leading-relaxed reveal reveal-delay-3">
+      <p class="mt-5 text-ink-soft leading-relaxed" data-reveal data-reveal-delay="0.3">
         Chaque flacon Nota Parfum est composé à la main dans notre atelier,
         pesé, macéré, étiqueté. C'est dans la précision de ce geste — pas dans la facture du carton —
         que se joue la qualité d'un parfum.
       </p>
 
-      <div class="hair mt-12 mb-8 reveal reveal-delay-3"></div>
+      <div class="hair mt-12 mb-8" data-reveal data-reveal-delay="0.3"></div>
 
-      <dl class="grid sm:grid-cols-1 gap-6">
-        {facts.map((f, i) => (
-          <div class={`reveal reveal-delay-${(i % 4) + 1} flex items-baseline justify-between gap-4 border-b border-ink/10 pb-4`}>
+      <dl class="grid sm:grid-cols-1 gap-6" data-stagger>
+        {facts.map((f) => (
+          <div data-stagger-item class="flex items-baseline justify-between gap-4 border-b border-ink/10 pb-4">
             <dt class="text-sm text-ink-soft">{f.label}</dt>
             <dd class="font-mono text-[11px] tracking-[0.18em] text-ink uppercase text-right">
               {f.value}

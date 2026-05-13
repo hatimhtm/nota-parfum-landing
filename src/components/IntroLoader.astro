@@ -1,10 +1,17 @@
 ---
-import { brand } from "../data/brand";
+import { brand, withBase } from "../data/brand";
 ---
 
 <div class="intro-loader" aria-hidden="true">
-  <div class="intro-loader__mark">
-    <span class="intro-loader__word">NOTA</span>
-    <span class="intro-loader__sub">Parfum &middot; {brand.city}</span>
+  <div class="intro-loader__inner">
+    <img
+      src={withBase("brand/logo.png")}
+      alt=""
+      class="intro-loader__logo logo-img"
+      width="320"
+      height="320"
+    />
+    <span class="intro-loader__rule"></span>
+    <span class="intro-loader__sub">Parfumerie &middot; {brand.city}</span>
   </div>
 </div>
