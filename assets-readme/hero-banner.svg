@@ -1,36 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="1280" height="400" role="img" aria-label="Nota">
   <defs>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#1A1A1A" stroke-width="0.5" opacity="0.08"/>
-    </pattern>
+    <radialGradient id="glow" gradientUnits="userSpaceOnUse" cx="1090" cy="200" r="340"><stop offset="0" stop-color="#2E4FD6" stop-opacity=".13"/><stop offset="1" stop-color="#2E4FD6" stop-opacity="0"/></radialGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".78"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".46"/></linearGradient>
+    <filter id="lift" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#14151A" flood-opacity=".10"/></filter>
+    <style>
+      text { font-family: Satoshi,'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif; }
+    </style>
   </defs>
-
-  <rect width="1280" height="420" fill="#F5EFE4"/>
-  <rect width="1280" height="420" fill="url(#grid)"/>
-
-  <rect x="0" y="0" width="1280" height="36" fill="#CCFF00"/>
-  <text x="40" y="24" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" letter-spacing="6" fill="#1A1A1A">
-    ASTRO · TAILWIND · BUN · VITEST · VERCEL · STATIC
-  </text>
-
-  <text x="40" y="100" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" letter-spacing="6" fill="#1A1A1A">
-    PARFUMERIE · FÈS, MAROC · 24 FRAGRANCES
-  </text>
-
-  <text x="40" y="250" font-family="Helvetica Neue, Arial Black, sans-serif" font-size="148" font-weight="900" letter-spacing="-6" fill="#1A1A1A">
-    NOTA<tspan fill="#CCFF00">.</tspan>
-  </text>
-
-  <text x="40" y="310" font-family="JetBrains Mono, monospace" font-size="14" font-weight="500" letter-spacing="2" fill="#1A1A1A">
-    L'essence de votre signature.
-  </text>
-
-  <rect x="1080" y="80" width="140" height="140" fill="#CCFF00" stroke="#1A1A1A" stroke-width="2"/>
-  <text x="1100" y="120" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" letter-spacing="2" fill="#1A1A1A">INSPIRED</text>
-  <text x="1100" y="148" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" letter-spacing="2" fill="#1A1A1A">BY · MADE</text>
-  <text x="1100" y="176" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" letter-spacing="2" fill="#1A1A1A">IN FÈS</text>
-
-  <text x="40" y="385" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" letter-spacing="4" fill="#1A1A1A" opacity="0.7">
-    LANDING PAGE · CLIENT PITCH · MAY 2026 · HATIM EL HASSAK
-  </text>
+  <rect width="1280" height="400" rx="28" fill="#EBEAE6"/>
+  <rect width="1280" height="400" rx="28" fill="url(#glow)"/>
+  <rect x="0.5" y="0.5" width="1279" height="399" rx="27.5" fill="none" stroke="#14151A" stroke-opacity=".08"/>
+  <circle cx="84" cy="71" r="4" fill="#2E4FD6"/>
+  <text x="102" y="76" font-size="14" font-weight="600" letter-spacing="1.68" fill="#5D5F65">ASTRO · TAILWIND · BUN · VITEST · VERCEL · STATIC</text>
+  <text x="80" y="134" font-size="15" font-weight="700" letter-spacing="2.40" fill="#2E4FD6">PARFUMERIE · FÈS, MAROC · 24 FRAGRANCES</text>
+  <text x="78" y="262" font-size="100.0" font-weight="700" letter-spacing="-3.50" fill="#14151A">Nota<tspan fill="#2E4FD6">.</tspan></text>
+  <text x="80" y="316" font-size="22" font-weight="500" fill="#2B2D33">L'essence de votre signature.</text>
+  <line x1="80" y1="342" x2="1200" y2="342" stroke="#14151A" stroke-opacity=".10"/>
+  <text x="80" y="372" font-size="13" font-weight="600" letter-spacing="1.56" fill="#5D5F65">LANDING PAGE · CLIENT PITCH · MAY 2026 · HATIM EL HASSAK</text>
+  <g filter="url(#lift)">
+    <rect x="996" y="108" width="204" height="159" rx="28" fill="url(#card)" stroke="#FFFFFF" stroke-opacity=".85"/>
+  </g>
+  <circle cx="1098" cy="136" r="4" fill="#2E4FD6"/>
+  <text x="1098" y="180" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="2.2" fill="#14151A">INSPIRED</text>
+  <text x="1098" y="211" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="2.2" fill="#14151A">BY · MADE</text>
+  <text x="1098" y="242" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="2.2" fill="#14151A">IN FÈS</text>
 </svg>
